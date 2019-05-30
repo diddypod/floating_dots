@@ -2,8 +2,21 @@
 
 Creates a group of coloured floating dots (or a single floating dot) that travel at a random speed from one edge of the screen to another.
 
-![small dots, floating randomly](screenshots/small_random_random.gif "small dots, moving randomly from all edges")
-![small dots, floating up](screenshots/small_up_straight_500.gif "small dots, moving straight up from the bottom")
+![small dots, floating randomly](https://i.imgur.com/fZEN9K6.gif "small dots, moving randomly from all edges")
+![small dots, floating up](https://i.imgur.com/plniDj1.gif "small dots, moving straight up from the bottom")
+
+## Installation
+
+In your `pubspec.yaml` root add:
+
+```yaml
+dependencies:
+    floating_dots: ^0.0.1
+```
+
+then,
+
+`import 'package:gradient_widgets/gradient_widgets.dart';`
 
 ## Usage
 
@@ -32,7 +45,7 @@ FloatingDot(
 
 ## Examples
 
-![small dots](screenshots/small_up_straight_5.gif "Demo of small dots, floating up")
+![small dots](https://i.imgur.com/YxEX4uO.gif "Demo of small dots, floating up")
 
 Small dots
 
@@ -46,7 +59,7 @@ FloatingDotGroup(
 )
 ```
 
-![medium dots](screenshots/medium_random_random.gif "Demo of medium dots, floating in from all edges")
+![medium dots](https://i.imgur.com/d6r1Rax.gif "Demo of medium dots, floating in from all edges")
 
 Medium dots
 
@@ -60,7 +73,7 @@ FloatingDotGroup(
 )
 ```
 
-![large dots](screenshots/large_up_straight.gif "Demo of medium dots, floating up")
+![large dots](https://i.imgur.com/HqBzAYP.gif "Demo of medium dots, floating up")
 
 Large dots
 
