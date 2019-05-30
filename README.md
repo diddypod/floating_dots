@@ -9,7 +9,7 @@ Creates a group of coloured floating dots (or a single floating dot) that travel
 
 ### FloatingDotGroup
 
-```
+```dart
 FloatingDotGroup(
     number: int,
     direction: Direction,
@@ -18,9 +18,10 @@ FloatingDotGroup(
     colors: List<Color>,
 )
 ```
+
 ### FloatingDot
 
-```
+```dart
 FloatingDot(
     direction: Direction,
     trajectory: Trajectory,
@@ -34,7 +35,8 @@ FloatingDot(
 ## Examples
 
 Small dots
-```
+
+```dart
 FloatingDotGroup(
     number: 5,
     direction: Direction.up,
@@ -43,10 +45,12 @@ FloatingDotGroup(
     colors: Colors.primaries,
 )
 ```
+
 ![medium dots](screenshots/medium_random_random.gif "Demo of medium dots, floating in from all edges")
 
 Medium dots
-```
+
+```dart
 FloatingDotGroup(
     number: 25,
     direction: Direction.random,
@@ -59,7 +63,8 @@ FloatingDotGroup(
 ![large dots](screenshots/large_up_straight.gif "Demo of medium dots, floating up")
 
 Large dots
-```
+
+```dart
 FloatingDotGroup(
     number: 3,
     direction: Direction.up,

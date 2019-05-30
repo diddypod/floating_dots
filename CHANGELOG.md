@@ -1,3 +1,4 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - 30-05-2019
 
-* TODO: Describe initial release.
+* Create package.
+* Add documentation.

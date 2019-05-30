@@ -6,12 +6,13 @@ import 'package:flutter/material.dart';
 
 /// Creates a group of [FloatingDot]
 ///
-/// A FloatingDotGroup creates a specified [number] of [FloatingDots], in one
-/// of three sizes, [DotSize.small], [DotSize.medium] and [DotSize.large]. The
-/// dots can move in [Direction.up], starting from the bottom, or travel in
-/// [Direction.random] from any edge to the opposite edge of the screen, from
-/// the [direction] parameter. The dots can travel in a straight line from a
-/// point on one edge to it's mirror point on the opposite edge
+/// A FloatingDotGroup creates a specified [number] of [FloatingDot] objects,
+/// in one of three sizes, [DotSize.small], [DotSize.medium] and
+/// [DotSize.large], or a mix of all 3 using [DotSize.random] passed to
+/// [size]. They can move in [Direction.up], starting from the bottom, or
+/// travel in [Direction.random] from any edge to the opposite edge of the
+/// screen, from the [direction] parameter. The dots can travel in a straight
+/// line from a point on one edge/// to it's mirror point on the opposite edge
 /// [Trajectory.straight], or to a random point on the opposite edge
 /// [Trajectory.random], determined by [trajectory]. The [Color] of each ball
 /// is assigned at random from a list passed to [colors].
@@ -45,6 +46,15 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
     double radius;
 
     super.initState();
+
+    // Assign size as per DotSize
+    //  - small:  5-20
+    //  - medium: 25-50
+    //  - large:  50-100
+    //  - random: 5-75
+    // Assign color at random from list of Color objects.
+    // Add them to the list of FloatingDot objects.
+
     for (int i = 0; i < widget.number; i++) {
       if (widget.size == DotSize.small) {
         radius = widget.random.nextDouble() * 15 + 5;
@@ -80,18 +90,16 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
   }
 }
 
-typedef SizeCallback = void Function(Direction direction);
-
 /// Creates a dot that travels from an edge of the screen to the opposite egde
 ///
-/// A FloatingDotGroup creates one coloured dot. The dot can move in
+/// A FloatingDot creates one coloured dot. This dot can move in
 /// [Direction.up], starting from the bottom, or travel in
 /// [Direction.random] from any edge to the opposite edge of the screen, from
-/// the [direction] parameter. The dots can travel in a straight line from a
-/// point on one edge to it's mirror point on the opposite edge
+/// the [direction] parameter. It can travel in a straight line from a point
+/// on one edge to it's mirror point on the opposite edge
 /// [Trajectory.straight], or to a random point on the opposite edge
-/// [Trajectory.random], determined by [trajectory]. The [Color] of each ball
-/// is assigned as [color]. The size of the ball is passed as [radius].
+/// [Trajectory.random], determined by [trajectory]. The [Color] of this ball
+/// is passed as [color]. The size is determined by [radius].
 
 class FloatingDot extends StatefulWidget {
   final direction;
@@ -126,6 +134,14 @@ class FloatingDotState extends State<FloatingDot>
   @override
   void initState() {
     super.initState();
+
+    // Assign travel direction and starting edge from Direction.
+    // Assign random initial position.
+    // Assign destination from Traejectory, either random or initial postion.
+    // Assign _start, a beginning handicap so that dots are created staggered,
+    // and not all on the edge.
+    // Create and start repeating linear animation with a speed between 15-60
+    // seconds from edge to edge.
 
     _fraction = 0.0;
     if (widget.direction == Direction.up) {
@@ -171,6 +187,8 @@ class FloatingDotState extends State<FloatingDot>
   }
 }
 
+/// Paints the dot from parameters given by [FloatingDot]
+
 class DotPainter extends CustomPainter {
   bool vertical;
   bool inverseDir;
@@ -198,6 +216,9 @@ class DotPainter extends CustomPainter {
     diameter = radius * 2;
     distance = destination - initialPosition;
   }
+
+  // Find initial and final destinations and paint at linear interpolation
+  // using animation fraction.
 
   @override
   void paint(Canvas canvas, Size size) {
