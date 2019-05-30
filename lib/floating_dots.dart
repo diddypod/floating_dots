@@ -4,6 +4,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
+/// Creates a group of [FloatingDot]
+///
+/// A FloatingDotGroup creates a specified [number] of [FloatingDots], in one
+/// of three sizes, [DotSize.small], [DotSize.medium] and [DotSize.large]. The
+/// dots can move in [Direction.up], starting from the bottom, or travel in
+/// [Direction.random] from any edge to the opposite edge of the screen, from
+/// the [direction] parameter. The dots can travel in a straight line from a
+/// point on one edge to it's mirror point on the opposite edge
+/// [Trajectory.straight], or to a random point on the opposite edge
+/// [Trajectory.random], determined by [trajectory]. The [Color] of each ball
+/// is assigned at random from a list passed to [colors].
+
 class FloatingDotGroup extends StatefulWidget {
   final int number;
   final direction;
@@ -14,9 +26,9 @@ class FloatingDotGroup extends StatefulWidget {
 
   FloatingDotGroup({
     Key key,
-    this.number = 20,
-    this.direction,
-    this.trajectory,
+    this.number = 25,
+    this.direction = Direction.random,
+    this.trajectory = Trajectory.random,
     this.colors = Colors.primaries,
     @required this.size,
   }) : super(key: key);
@@ -69,6 +81,17 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
 }
 
 typedef SizeCallback = void Function(Direction direction);
+
+/// Creates a dot that travels from an edge of the screen to the opposite egde
+///
+/// A FloatingDotGroup creates one coloured dot. The dot can move in
+/// [Direction.up], starting from the bottom, or travel in
+/// [Direction.random] from any edge to the opposite edge of the screen, from
+/// the [direction] parameter. The dots can travel in a straight line from a
+/// point on one edge to it's mirror point on the opposite edge
+/// [Trajectory.straight], or to a random point on the opposite edge
+/// [Trajectory.random], determined by [trajectory]. The [Color] of each ball
+/// is assigned as [color]. The size of the ball is passed as [radius].
 
 class FloatingDot extends StatefulWidget {
   final direction;

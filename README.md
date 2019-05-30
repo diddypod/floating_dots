@@ -1,6 +1,6 @@
 # floating_dots
 
-Creates a group of floating dots (or a single floating dot) that travel at a random speed from one edge of the screen to another.
+Creates a group of coloured floating dots (or a single floating dot) that travel at a random speed from one edge of the screen to another.
 
 ![small dots, floating randomly](screenshots/small_random_random.gif "small dots, moving randomly from all edges")
 ![small dots, floating up](screenshots/small_up_straight_500.gif "small dots, moving straight up from the bottom")
