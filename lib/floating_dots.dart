@@ -50,7 +50,7 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
           direction: widget.direction,
           trajectory: widget.trajectory,
           radius: radius,
-          color: widget.colors[widget.random.nextInt(Colors.accents.length)],
+          color: widget.colors[widget.random.nextInt(widget.colors.length)],
         ),
       ));
     }
