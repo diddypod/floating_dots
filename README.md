@@ -30,9 +30,9 @@ FloatingDot(
 )
 ```
 
-![small dots](screenshots/small_up_straight_5.gif "Demo of small dots, floating up")
-
 ## Examples
+
+![small dots](screenshots/small_up_straight_5.gif "Demo of small dots, floating up")
 
 Small dots
 
