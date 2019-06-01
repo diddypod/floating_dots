@@ -15,7 +15,7 @@ dependencies:
 
 then,
 
-`import 'package:gradient_widgets/gradient_widgets.dart';`
+`import 'package:floating_dots/floating_dots.dart';`
 
 ## Usage
 
