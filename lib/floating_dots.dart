@@ -19,10 +19,12 @@ import 'package:flutter/material.dart';
 
 class FloatingDotGroup extends StatefulWidget {
   final int number;
-  final direction;
-  final trajectory;
-  final size;
-  final colors;
+  final Direction direction;
+  final Trajectory trajectory;
+  final DotSize size;
+  final List<Color> colors;
+  final double opacity;
+  final DotSpeed speed;
   final random = Random();
 
   FloatingDotGroup({
@@ -30,8 +32,10 @@ class FloatingDotGroup extends StatefulWidget {
     this.number = 25,
     this.direction = Direction.random,
     this.trajectory = Trajectory.random,
+    this.size = DotSize.random,
     this.colors = Colors.primaries,
-    @required this.size,
+    this.opacity = .5,
+    this.speed = DotSpeed.slow,
   }) : super(key: key);
 
   @override
@@ -44,6 +48,7 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
   @override
   void initState() {
     double radius;
+    int time;
 
     super.initState();
 
@@ -65,6 +70,15 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
       } else if (widget.size == DotSize.random) {
         radius = widget.random.nextDouble() * 70 + 5;
       }
+      if (widget.speed == DotSpeed.slow) {
+        time = widget.random.nextInt(45) + 15;
+      } else if (widget.speed == DotSpeed.medium) {
+        time = widget.random.nextInt(30) + 10;
+      } else if (widget.speed == DotSpeed.fast) {
+        time = widget.random.nextInt(15) + 5;
+      } else if (widget.speed == DotSpeed.mixed) {
+        time = widget.random.nextInt(45) + 5;
+      }
       _dots.add(Container(
         width: double.infinity,
         height: double.infinity,
@@ -73,6 +87,8 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
           trajectory: widget.trajectory,
           radius: radius,
           color: widget.colors[widget.random.nextInt(widget.colors.length)],
+          opacity: widget.opacity,
+          time: time,
         ),
       ));
     }
@@ -102,17 +118,21 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
 /// is passed as [color]. The size is determined by [radius].
 
 class FloatingDot extends StatefulWidget {
-  final direction;
-  final trajectory;
+  final Direction direction;
+  final Trajectory trajectory;
   final double radius;
-  final color;
+  final double opacity;
+  final int time;
+  final Color color;
 
   FloatingDot({
     Key key,
-    this.direction = Direction.random,
-    this.trajectory = Trajectory.random,
+    @required this.direction,
+    @required this.trajectory,
+    @required this.opacity,
     @required this.radius,
     @required this.color,
+    @required this.time,
   }) : super(key: key);
 
   @override
@@ -159,7 +179,7 @@ class FloatingDotState extends State<FloatingDot>
     }
     _start = 150 * random.nextDouble();
     controller = AnimationController(
-        duration: Duration(seconds: random.nextInt(45) + 15), vsync: this);
+        duration: Duration(seconds: widget.time), vsync: this);
 
     animation = Tween(begin: 0.0, end: 1.0).animate(controller)
       ..addListener(() {
@@ -183,6 +203,7 @@ class FloatingDotState extends State<FloatingDot>
       start: _start,
       fraction: _fraction,
       color: widget.color,
+      opacity: widget.opacity,
     ));
   }
 }
@@ -200,7 +221,8 @@ class DotPainter extends CustomPainter {
   double distance;
   double fraction;
   Color color;
-  final Paint _paint;
+  double opacity;
+  Paint _paint;
 
   DotPainter({
     this.vertical,
@@ -211,8 +233,9 @@ class DotPainter extends CustomPainter {
     this.start,
     this.fraction,
     this.color,
+    this.opacity,
   }) : _paint = Paint() {
-    _paint.color = Color.lerp(color, Color.fromARGB(0, 255, 255, 255), .25);
+    _paint.color = color.withOpacity(this.opacity);
     diameter = radius * 2;
     distance = destination - initialPosition;
   }
@@ -270,4 +293,11 @@ enum DotSize {
   medium,
   large,
   random,
+}
+
+enum DotSpeed {
+  slow,
+  medium,
+  fast,
+  mixed,
 }
