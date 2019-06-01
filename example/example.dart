@@ -21,18 +21,21 @@ class MyHomePage extends StatelessWidget {
     return Scaffold(
       body: Container(
         child: FloatingDotGroup(
-            number: 500,
-            direction: Direction.up,
-            trajectory: Trajectory.straight,
-            size: DotSize.small,
-            colors: [
-              Colors.red,
-              Colors.green,
-              Colors.blue,
-              Colors.yellow,
-              Colors.purple,
-              Colors.orange
-            ]),
+          number: 500,
+          direction: Direction.up,
+          trajectory: Trajectory.straight,
+          size: DotSize.small,
+          colors: [
+            Colors.red,
+            Colors.green,
+            Colors.blue,
+            Colors.yellow,
+            Colors.purple,
+            Colors.orange
+          ],
+          opacity: 0.5,
+          speed: DotSpeed.slow,
+        ),
       ),
     );
   }

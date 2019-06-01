@@ -12,7 +12,7 @@ In your `pubspec.yaml` root add:
 
 ```yaml
 dependencies:
-    floating_dots: ^0.1.1
+    floating_dots: ^0.2.1
 ```
 
 then,
@@ -30,6 +30,8 @@ FloatingDotGroup(
     trajectory: Trajectory,
     size: DotSize,
     colors: List<Color>,
+    opacity: double,
+    speed: DotSpeed,
 )
 ```
 
@@ -41,6 +43,8 @@ FloatingDot(
     trajectory: Trajectory,
     radius: double,
     color: Colour,
+    opacity: double,
+    time: int,
 )
 ```
 
@@ -57,6 +61,7 @@ FloatingDotGroup(
     trajectory: Trajectory.straight,
     size: DotSize.small,
     colors: Colors.primaries,
+    speed: DotSpeed.slow(),
 )
 ```
 
@@ -71,6 +76,7 @@ FloatingDotGroup(
     trajectory: Trajectory.random,
     size: DotSize.medium,
     colors: Colors.accents,
+    speed: DotSpeed.slow(),
 )
 ```
 
@@ -85,5 +91,6 @@ FloatingDotGroup(
     trajectory: Trajectory.straight,
     size: DotSize.large,
     colors: Colors.accents,
+    speed: DotSpeed.slow(),
 )
 ```

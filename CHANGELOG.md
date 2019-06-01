@@ -13,3 +13,7 @@
 * Add speed and opacity controls
 * Assign types to all parameters
 * Assign a defautl value to DotSize - DotSize.random
+
+## [0.2.1] - 01-06-2019
+
+* Update example and README
