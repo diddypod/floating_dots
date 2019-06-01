@@ -1,5 +1,7 @@
 # floating_dots
 
+[![Pub](https://img.shields.io/pub/v/floating_dots.svg)](https://pub.dartlang.org/packages/floating_dots)
+
 Creates a group of coloured floating dots (or a single floating dot) that travel at a random speed from one edge of the screen to another.
 
 ![small dots, floating randomly](https://i.imgur.com/DYGCvqK.gif "small dots, moving randomly from all edges")      ![small dots, floating up](https://i.imgur.com/uHZGSAT.gif "small dots, moving straight up from the bottom")

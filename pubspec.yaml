@@ -1,5 +1,5 @@
 name: floating_dots
-version: 0.0.1
+version: 0.1.0
 author: "Suchit Kar <suchitkar1997@gmail.com>"
 homepage: https://github.com/diddypod/floating_dots
 description: Creates a group of floating dots (or a single floating dot) that travel at a random speed from one edge of the screen to another.
