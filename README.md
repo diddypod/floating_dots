@@ -12,7 +12,7 @@ In your `pubspec.yaml` root add:
 
 ```yaml
 dependencies:
-    floating_dots: ^0.0.1
+    floating_dots: ^0.1.0
 ```
 
 then,
