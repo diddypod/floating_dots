@@ -8,7 +8,7 @@
 * Update README.
 * Stable release code.
 
-## [0.1.1] - 01-06-2019
+## [0.2.0] - 01-06-2019
 
 * Add speed and opacity controls
 * Assign types to all parameters
