@@ -12,10 +12,12 @@ import 'package:flutter/material.dart';
 /// [size]. They can move in [Direction.up], starting from the bottom, or
 /// travel in [Direction.random] from any edge to the opposite edge of the
 /// screen, from the [direction] parameter. The dots can travel in a straight
-/// line from a point on one edge/// to it's mirror point on the opposite edge
-/// [Trajectory.straight], or to a random point on the opposite edge
-/// [Trajectory.random], determined by [trajectory]. The [Color] of each ball
-/// is assigned at random from a list passed to [colors].
+/// line from a point on one edge to it's mirror point on the opposite edge
+///  - [Trajectory.straight], or to a random point on the opposite edge
+///  - [Trajectory.random], determined by [trajectory]. The [Color] of each
+/// ball is assigned at random from a list passed to [colors]. The opacity of
+/// the color is controlled with [opacity] and is applied to the color of each
+/// dot.
 
 class FloatingDotGroup extends StatefulWidget {
   final int number;
@@ -43,14 +45,11 @@ class FloatingDotGroup extends StatefulWidget {
 }
 
 class FloatingDotGroupState extends State<FloatingDotGroup> {
-  List<Widget> _dots = [];
+  double radius;
+  int time;
 
-  @override
-  void initState() {
-    double radius;
-    int time;
-
-    super.initState();
+  List<Widget> buildDots() {
+    List<Widget> dots = [];
 
     // Assign size as per DotSize
     //  - small:  5-20
@@ -71,27 +70,28 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
         radius = widget.random.nextDouble() * 70 + 5;
       }
       if (widget.speed == DotSpeed.slow) {
-        time = widget.random.nextInt(45) + 15;
+        time = widget.random.nextInt(45) + 22;
       } else if (widget.speed == DotSpeed.medium) {
-        time = widget.random.nextInt(30) + 10;
+        time = widget.random.nextInt(30) + 15;
       } else if (widget.speed == DotSpeed.fast) {
-        time = widget.random.nextInt(15) + 5;
+        time = widget.random.nextInt(15) + 7;
       } else if (widget.speed == DotSpeed.mixed) {
-        time = widget.random.nextInt(45) + 5;
+        time = widget.random.nextInt(45) + 7;
       }
-      _dots.add(Container(
+      dots.add(Container(
         width: double.infinity,
         height: double.infinity,
         child: FloatingDot(
           direction: widget.direction,
           trajectory: widget.trajectory,
           radius: radius,
-          color: widget.colors[widget.random.nextInt(widget.colors.length)],
-          opacity: widget.opacity,
+          color: widget.colors[widget.random.nextInt(widget.colors.length)]
+              .withOpacity(widget.opacity),
           time: time,
         ),
       ));
     }
+    return dots;
   }
 
   @override
@@ -100,7 +100,7 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
       width: double.infinity,
       height: double.infinity,
       child: Stack(
-        children: _dots,
+        children: buildDots(),
       ),
     );
   }
@@ -115,13 +115,13 @@ class FloatingDotGroupState extends State<FloatingDotGroup> {
 /// on one edge to it's mirror point on the opposite edge
 /// [Trajectory.straight], or to a random point on the opposite edge
 /// [Trajectory.random], determined by [trajectory]. The [Color] of this ball
-/// is passed as [color]. The size is determined by [radius].
+/// is passed as [color]. The size is determined by [radius]. The time taken by
+/// the dot to go from end to end is passed as [time].
 
 class FloatingDot extends StatefulWidget {
   final Direction direction;
   final Trajectory trajectory;
   final double radius;
-  final double opacity;
   final int time;
   final Color color;
 
@@ -129,7 +129,6 @@ class FloatingDot extends StatefulWidget {
     Key key,
     @required this.direction,
     @required this.trajectory,
-    @required this.opacity,
     @required this.radius,
     @required this.color,
     @required this.time,
@@ -148,7 +147,6 @@ class FloatingDotState extends State<FloatingDot>
   double _destination;
   double _start;
   double _fraction;
-  Animation<double> animation;
   AnimationController controller;
 
   @override
@@ -181,14 +179,39 @@ class FloatingDotState extends State<FloatingDot>
     controller = AnimationController(
         duration: Duration(seconds: widget.time), vsync: this);
 
-    animation = Tween(begin: 0.0, end: 1.0).animate(controller)
+    controller
       ..addListener(() {
         setState(() {
-          _fraction = animation.value;
+          _fraction = controller.value;
         });
       });
 
     controller.repeat();
+  }
+
+  @override
+  void didUpdateWidget(covariant FloatingDot oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.direction != oldWidget.direction) {
+      if (widget.direction == Direction.up) {
+        _vertical = true;
+        _inverseDir = false;
+      } else {
+        _vertical = random.nextBool();
+        _inverseDir = random.nextBool();
+      }
+    }
+    if (widget.trajectory != oldWidget.trajectory) {
+      if (widget.trajectory == Trajectory.straight) {
+        _destination = _initialPosition;
+      } else {
+        _destination = random.nextDouble();
+      }
+    }
+    if (widget.time != oldWidget.time) {
+      controller.duration = Duration(seconds: widget.time);
+      controller.repeat();
+    }
   }
 
   @override
@@ -203,7 +226,6 @@ class FloatingDotState extends State<FloatingDot>
       start: _start,
       fraction: _fraction,
       color: widget.color,
-      opacity: widget.opacity,
     ));
   }
 }
@@ -221,7 +243,6 @@ class DotPainter extends CustomPainter {
   double distance;
   double fraction;
   Color color;
-  double opacity;
   Paint _paint;
 
   DotPainter({
@@ -233,9 +254,8 @@ class DotPainter extends CustomPainter {
     this.start,
     this.fraction,
     this.color,
-    this.opacity,
   }) : _paint = Paint() {
-    _paint.color = color.withOpacity(this.opacity);
+    _paint.color = color;
     diameter = radius * 2;
     distance = destination - initialPosition;
   }
