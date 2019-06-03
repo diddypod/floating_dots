@@ -4,7 +4,7 @@
 
 Creates a group of coloured floating dots (or a single floating dot) that travel at a random speed from one edge of the screen to another.
 
-![small dots, floating randomly](https://i.imgur.com/SZThxum.gif "small dots, moving randomly from all edges")  ![small dots, floating up](https://i.imgur.com/GRLc2Lk.gif "small dots, moving straight up from the bottom")
+![small dots, floating randomly](https://i.imgur.com/SZThxum.gif "small dots, moving randomly from all edges")  ![small dots, floating up](https://i.imgur.com/uUvY96k.gif "small dots, moving straight up from the bottom")
 
 ## Installation
 
